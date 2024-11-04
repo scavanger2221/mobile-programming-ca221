@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hello_world/pages/home_page.dart';
+import 'package:hello_world/pages/search_page.dart';
 import 'package:hello_world/resources/colors.dart';
 
 class MainPage extends StatefulWidget {
@@ -20,10 +21,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   final List<Widget> _pages = [
-    const HomePage(),
-    const Center(
-      child: Text("Search"),
-    ),
+    //const HomePage(),
+    const SearchPage(),
     const Center(
       child: Text("Add"),
     ),

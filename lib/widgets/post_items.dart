@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/resources/colors.dart';
 import 'package:hello_world/resources/dimentions.dart';
 import 'package:hello_world/widgets/post_action.dart';
 import 'package:hello_world/widgets/post_title.dart';

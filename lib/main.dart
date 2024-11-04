@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/pages/main_page.dart';
+import 'package:hello_world/resources/colors.dart';
 import 'package:hello_world/resources/string.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Poppins',
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
       home: MainPage()

@@ -12,7 +12,7 @@ class PostTitle extends StatelessWidget {
           ),
           subtitle: Text('Denpasar Bali', style: TextStyle(color: Colors.grey),),
           leading: CircleAvatar(
-            backgroundImage: NetworkImage('https://i.pravatar.cc//150?img=1'),
+            backgroundImage: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/8/85/Elon_Musk_Royal_Society_%28crop1%29.jpg'),
           )
 
     ); 
