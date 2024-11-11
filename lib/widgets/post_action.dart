@@ -6,16 +6,20 @@ class PostAction extends StatelessWidget {
     super.key,
     required this.icon,
     required this.label,
+    this.action 
   });
+
+  final VoidCallback? action; 
   final String icon;
   final String label;
+
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: action ?? (){},
           icon: SvgPicture.asset(
             icon,
             colorFilter: const ColorFilter.mode(

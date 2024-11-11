@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:hello_world/resources/dimentions.dart';
 
 class PostCover extends StatelessWidget {
-  const PostCover({super.key});
+  const PostCover({super.key, required this.imageUrl});
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
-    return 
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(extraLargeSize),
-                  image: const DecorationImage(
-                    image: NetworkImage("https://picsum.photos/200"),
-                    fit: BoxFit.cover
-                  )
-                ),
-              );
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Container(
+        margin: const EdgeInsets.all(mediumSize),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(extraLargeSize),
+            image: DecorationImage(
+                image: NetworkImage(imageUrl), fit: BoxFit.cover)),
+      ),
+    );
   }
 }

@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/pages/moment_comment_page.dart';
 import 'package:hello_world/resources/dimentions.dart';
 import 'package:hello_world/widgets/post_action.dart';
 import 'package:hello_world/widgets/post_title.dart';
 
+
+import '../models/moment.dart';
+
 class PostItems extends StatelessWidget {
-  const PostItems({super.key});
+  const PostItems({
+    super.key,
+    required this.moment,
+  });
+
+  final Moment moment;
+
+   void _openCommentForm(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MomentCommentPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,38 +33,47 @@ class PostItems extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(extraLargeSize),
-          image: const DecorationImage(
-            //image: AssetImage('assets/images/moments_background_dark.png'),
-            image: NetworkImage('https://picsum.photos/800/600?random=3'),
+          image: DecorationImage(
+            // image: AssetImage('assets/images/moments_background_dark.png'),
+            image: NetworkImage(moment.imageUrl),
             fit: BoxFit.cover,
           ),
         ),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            PostTitle(),
+            PostTitle(
+              creator: moment.creator,
+              location: moment.location,
+            ),
             Padding(
-              padding: EdgeInsets.all(smallSize),
+              padding: const EdgeInsets.all(smallSize),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
                       PostAction(
-                          icon: 'assets/icons/fi-br-heart.svg', label: '230'),
+                        icon: 'assets/icons/fi-br-heart.svg',
+                        label: moment.likeCount.toString(),
+                      ),
                       PostAction(
-                          icon: 'assets/icons/fi-br-comment.svg', label: '230'),
+                        icon: 'assets/icons/fi-br-comment.svg',
+                        label: moment.commentCount.toString(),
+                        action: () => _openCommentForm(context),
+                      ),
                       PostAction(
-                          icon: 'assets/icons/fi-br-bookmark.svg',
-                          label: '230'),
+                        icon: 'assets/icons/fi-br-bookmark.svg',
+                        label: moment.bookmarkCount.toString(),
+                      ),
                     ],
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: largeSize, bottom: smallSize),
+                    padding: const EdgeInsets.only(
+                        left: largeSize, bottom: mediumSize),
                     child: Text(
-                      'This is an example of moment post',
-                      style: TextStyle(
+                      moment.caption,
+                      style: const TextStyle(
                         color: Colors.white70,
                       ),
                     ),

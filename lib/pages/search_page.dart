@@ -1,38 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/models/moment.dart';
 import 'package:hello_world/resources/dimentions.dart';
 import 'package:hello_world/widgets/post_cover.dart';
+import 'package:hello_world/widgets/search_and_filter.dart';
 
 class SearchPage extends StatelessWidget {
-  const SearchPage({super.key});
+  const SearchPage({super.key, required this.moments});
+
+  final List<Moment> moments;
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> items = List.generate(20, (index) => const PostCover());
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-          child: TextField(
-            autofocus: true,
-            decoration: InputDecoration(       
-              labelText: "Cari moment...",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(largeSize)
-              ),
-              prefixIcon: const Icon(Icons.search)
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SearchAndFilter(
+              onSubmit: (query) {} ,
             ),
           ),
-        ),
-         Expanded(
-           child: GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(10),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 2,
-              children: items
-               ),
-         )
-      ]);
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          //   child: TextField(
+          //     autofocus: true,
+          //     decoration: InputDecoration(       
+          //       labelText: "Cari moment...",
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(largeSize)
+          //       ),
+          //       prefixIcon: const Icon(Icons.search)
+          //     ),
+          //   ),
+          // ),
+              const SizedBox(
+            height: largeSize,
+          ),
+           Expanded(
+             child: GridView.builder(
+                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+                primary: false,
+                  itemBuilder: (context, index) => PostCover(imageUrl:moments[index].imageUrl),
+                  itemCount: moments.length,
+              ),
+                 ),
+        ]),
+    );
   }
 }
