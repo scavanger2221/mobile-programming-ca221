@@ -1,13 +1,17 @@
 import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hello_world/pages/home_page.dart';
+import 'package:hello_world/pages/moment_create_page.dart';
 import 'package:hello_world/pages/search_page.dart';
 import 'package:hello_world/resources/colors.dart';
+
+
 import 'package:nanoid2/nanoid2.dart';
 
 import '../models/moment.dart';
-import 'moment_create_page.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -29,7 +33,7 @@ class _MainPageState extends State<MainPage> {
     if (index == 2) {
       // Jika index halaman adalah 2, maka navigasi ke halaman create moment
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return MomentCreatePage(onSaved: _addMoment);
+        return MomentCreatePage(onSaved: _saveMoment);
       }));
     } else {
       // Jika index halaman bukan 2, maka navigasi ke halaman yang sesuai
@@ -58,17 +62,102 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  void _addMoment(Moment newMoment) {
-    setState(() {
-      _moments.add(newMoment);
-    });
+  void _saveMoment(Moment newMoment) {
+    final existingMoment = getMomentById(newMoment.id);
+    if (existingMoment == null) {
+      setState(() {
+        _moments.add(newMoment);
+      });
+    } else {
+      setState(() {
+        _moments[_moments.indexOf(existingMoment)] = newMoment;
+      });
+    }
+  }
+
+  void onUpdate(String momentId) {
+    final selectedMoment = getMomentById(momentId);
+    if (selectedMoment != null) {
+      // Menampilkan dialog konfirmasi pembaruan data moment
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Update Moment'),
+            content: const Text('Are you sure you want to update this moment?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return MomentCreatePage(
+                      onSaved: _saveMoment,
+                      selectedMoment: selectedMoment,
+                    );
+                  }));
+                },
+                child: const Text('Sure'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  void onDelete(String momentId) {
+    final selectedMoment = getMomentById(momentId);
+    if (selectedMoment != null) {
+      // Menampilkan dialog konfirmasi penghapusan moment
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Delete Moment'),
+            content: const Text('Are you sure you want to delete this moment?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _moments.remove(selectedMoment);
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Sure'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  Moment? getMomentById(String momentId) {
+    return _moments.firstWhereOrNull((moment) => moment.id == momentId);
   }
 
   @override
   Widget build(BuildContext context) {
     // List halaman yang tersedia
     final List<Widget> pages = [
-      HomePage(moments: _moments),
+      HomePage(
+        moments: _moments,
+        onUpdate: onUpdate,
+        onDelete: onDelete,
+      ),
       SearchPage(moments: _moments),
       const Center(
         child: Text('Create Moment'),

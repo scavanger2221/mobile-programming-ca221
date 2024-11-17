@@ -10,7 +10,7 @@ class Moment {
   int likeCount;
   int commentCount;
   int bookmarkCount;
-  Comment? comments;
+  List <Comment> comments =[];
 
   Moment({
     required this.id,

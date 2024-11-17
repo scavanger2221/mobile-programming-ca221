@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/pages/moment_comment_page.dart';
+import 'package:hello_world/pages/comment_page.dart';
 import 'package:hello_world/resources/dimentions.dart';
 import 'package:hello_world/widgets/post_action.dart';
 import 'package:hello_world/widgets/post_title.dart';
@@ -11,14 +11,18 @@ class PostItems extends StatelessWidget {
   const PostItems({
     super.key,
     required this.moment,
+    required this.onUpdate,
+    required this.onDelete,
   });
 
   final Moment moment;
+  final Function(String id) onUpdate;
+  final Function(String id) onDelete;
 
-   void _openCommentForm(BuildContext context) {
+  void _openCommentForm(BuildContext context, Moment moment) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MomentCommentPage()),
+      MaterialPageRoute(builder: (context) => CommentPage(momentId: moment.id,))
     );
   }
 
@@ -43,8 +47,9 @@ class PostItems extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             PostTitle(
-              creator: moment.creator,
-              location: moment.location,
+              moment: moment,
+              onUpdate: onUpdate,
+              onDelete: onDelete,
             ),
             Padding(
               padding: const EdgeInsets.all(smallSize),
@@ -60,7 +65,7 @@ class PostItems extends StatelessWidget {
                       PostAction(
                         icon: 'assets/icons/fi-br-comment.svg',
                         label: moment.commentCount.toString(),
-                        action: () => _openCommentForm(context),
+                        action: () => _openCommentForm(context, moment),
                       ),
                       PostAction(
                         icon: 'assets/icons/fi-br-bookmark.svg',
