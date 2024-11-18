@@ -71,7 +71,7 @@ class BookCover extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        book.releaseYear,
+                        book.releaseYear.toString(),
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.white54,

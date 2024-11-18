@@ -61,7 +61,7 @@ class _MainPageState extends State<MainPage> {
         title: _bookTitles[_faker.randomGenerator.integer(_bookTitles.length)],
         artist: _faker.person.name(),
         album: _faker.lorem.word(), // Random album/collection name
-        releaseYear: _faker.date.year(minYear: 1900, maxYear: 2024),
+        releaseYear: int.tryParse(_faker.date.year(minYear: 1900, maxYear: 2024)) ?? 2024,
         albumImage: 'https://picsum.photos/800/600?random=$index',
       ),
     );
@@ -77,6 +77,7 @@ class _MainPageState extends State<MainPage> {
         setState(() {
           final index = _books.indexOf(selectedBook);
           if (index != -1) {
+
             _books[index] =
                 newBook; // Replace the old book with the updated one
           }

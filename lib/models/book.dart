@@ -3,7 +3,7 @@ class Book {
   final String title; // Title of the book
   final String artist; // Artist or author
   final String album; // Album or collection
-  final String releaseYear; // Year of release
+  final int releaseYear; // Year of release
   final String albumImage; // URL or path to the album image
 
   Book({

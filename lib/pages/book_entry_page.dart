@@ -40,7 +40,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
           album: _bookData['album'],
           albumImage: _bookData['albumImage'],
           artist: _bookData['artist'],
-          releaseYear: _bookData['releaseYear'].toString());
+          releaseYear: _bookData['releaseYear']);
 
       if (widget.book != null) {
         widget.onSubmit(newBook, widget.book?.id);
@@ -126,7 +126,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
 
               // Release Year Field
               TextFormField(
-                initialValue: widget.book?.releaseYear,
+                initialValue: widget.book?.releaseYear.toString(),
                 decoration: const InputDecoration(labelText: 'Release Year'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
