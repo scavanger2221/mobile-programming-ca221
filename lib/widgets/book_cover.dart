@@ -3,8 +3,10 @@ import 'package:hello_world/models/book.dart';
 import 'package:hello_world/resources/dimentions.dart';
 
 class BookCover extends StatelessWidget {
-  const BookCover({super.key, required this.book});
+  const BookCover({super.key, required this.book, required this.onDelete, required this.onUpdate});
   final Book book;
+  final Function onDelete;
+    final Function onUpdate;
 
    @override
   Widget build(BuildContext context) {
@@ -91,32 +93,9 @@ class BookCover extends StatelessWidget {
                child: PopupMenuButton<String>(
                 onSelected: (value) {
                   if (value == 'edit') {
-                    
+                    onUpdate(book.id);
                   } else if (value == 'delete') {
-                           showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Delete Book'),
-                            content: const Text('Are you sure you want to delete this Book?'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('Sure'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('Cancel'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                    onDelete(book.id);
                   }
                 },
                 itemBuilder: (BuildContext context) => [

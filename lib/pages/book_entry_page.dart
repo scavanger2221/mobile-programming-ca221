@@ -3,9 +3,10 @@ import 'package:hello_world/models/book.dart';
 import 'package:nanoid2/nanoid2.dart';
 
 class BookEntryPage extends StatefulWidget {
-  final void Function(Book book) onSubmit;
+  const BookEntryPage({super.key, required this.onSubmit, this.book});
 
-  const BookEntryPage({super.key, required this.onSubmit});
+  final void Function(Book book, String? bookId) onSubmit;
+  final Book? book;
 
   @override
   State<BookEntryPage> createState() => _BookEntryFormState();
@@ -16,21 +17,37 @@ class _BookEntryFormState extends State<BookEntryPage> {
   final _bookData = {};
   // Initializing a Book instance
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.book !=null) {
+    _bookData['title'] = widget.book?.title;
+    _bookData['artist'] = widget.book?.artist;
+    _bookData['album'] = widget.book?.album;
+    _bookData['albumImage'] = widget.book?.albumImage;
+    _bookData['releaseYear'] = widget.book?.releaseYear;
+    }
+  }
+
   // Handle the form submission
   void _submitForm() {
     if (_formKey.currentState?.validate() == true) {
       // widget.onSubmit(_book);
 
-      final Book book  = Book(
-        title: _bookData['title'],
-        id: nanoid(),
-        album: _bookData['album'],
-        albumImage: _bookData['albumImage'],
-        artist: _bookData['artist'],
-        releaseYear: _bookData['releaseYear'].toString()
-      );
+      final Book newBook = Book(
+          title: _bookData['title'],
+          id: widget.book?.id ?? nanoid(),
+          album: _bookData['album'],
+          albumImage: _bookData['albumImage'],
+          artist: _bookData['artist'],
+          releaseYear: _bookData['releaseYear'].toString());
 
-      widget.onSubmit(book);
+      if (widget.book != null) {
+        widget.onSubmit(newBook, widget.book?.id);
+      } else {
+        widget.onSubmit(newBook, null);
+      }
+
       // Menutup halaman create moment
       Navigator.of(context).pop();
 
@@ -55,7 +72,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
             children: [
               // Title Field
               TextFormField(
-                initialValue: "",
+                initialValue: widget.book?.title,
                 decoration: const InputDecoration(labelText: 'Title'),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -73,7 +90,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
 
               // Artist Field
               TextFormField(
-                initialValue: "",
+                initialValue: widget.book?.artist,
                 decoration: const InputDecoration(labelText: 'Artist'),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -83,7 +100,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
                 },
                 onChanged: (value) {
                   setState(() {
-                     _bookData['artist'] = value;
+                    _bookData['artist'] = value;
                   });
                 },
               ),
@@ -91,7 +108,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
 
               // Album Field
               TextFormField(
-                initialValue: "",
+                initialValue: widget.book?.album,
                 decoration: const InputDecoration(labelText: 'Album'),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -101,7 +118,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
                 },
                 onChanged: (value) {
                   setState(() {
-                     _bookData['album'] = value;
+                    _bookData['album'] = value;
                   });
                 },
               ),
@@ -109,7 +126,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
 
               // Release Year Field
               TextFormField(
-                initialValue: "",
+                initialValue: widget.book?.releaseYear,
                 decoration: const InputDecoration(labelText: 'Release Year'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -117,14 +134,17 @@ class _BookEntryFormState extends State<BookEntryPage> {
                     return 'Please enter the release year';
                   }
                   final year = int.tryParse(value);
-                  if (year == null || year < 1000 || year > DateTime.now().year) {
+                  if (year == null ||
+                      year < 1000 ||
+                      year > DateTime.now().year) {
                     return 'Please enter a valid year';
                   }
                   return null;
                 },
                 onChanged: (value) {
                   setState(() {
-                    _bookData['releaseYear'] = int.tryParse(value) ?? _bookData['releaseYear'];
+                    _bookData['releaseYear'] =
+                        int.tryParse(value) ?? _bookData['releaseYear'];
                   });
                 },
               ),
@@ -132,7 +152,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
 
               // Image URL Field
               TextFormField(
-                initialValue: "",
+                initialValue: widget.book?.albumImage,
                 decoration: const InputDecoration(labelText: 'Album Image URL'),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -145,7 +165,7 @@ class _BookEntryFormState extends State<BookEntryPage> {
                 },
                 onChanged: (value) {
                   setState(() {
-                    _bookData['albumImage']  = value;
+                    _bookData['albumImage'] = value;
                   });
                 },
               ),
