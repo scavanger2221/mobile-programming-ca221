@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/models/moment.dart';
-import 'package:hello_world/resources/dimentions.dart';
-import 'package:hello_world/widgets/post_cover.dart';
-import 'package:hello_world/widgets/search_and_filter.dart';
+import 'package:myapp/models/moment.dart';
+import 'package:myapp/core/resources/dimentions.dart';
+import 'package:myapp/views/moment/widgets/post_cover.dart';
+import 'package:myapp/views/moment/widgets/search_and_filter.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key, required this.moments});

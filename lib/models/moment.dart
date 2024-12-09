@@ -1,5 +1,3 @@
-import 'package:hello_world/models/comment.dart';
-
 class Moment {
   String id;
   DateTime momentDate;
@@ -10,7 +8,6 @@ class Moment {
   int likeCount;
   int commentCount;
   int bookmarkCount;
-  List <Comment> comments =[];
 
   Moment({
     required this.id,

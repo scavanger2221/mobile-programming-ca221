@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/resources/dimentions.dart';
+import 'package:myapp/core/resources/dimentions.dart';
 
 class PostCover extends StatelessWidget {
   const PostCover({super.key, required this.imageUrl});

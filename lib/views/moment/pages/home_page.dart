@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/models/moment.dart';
-import 'package:hello_world/widgets/post_items.dart';
+import 'package:myapp/models/moment.dart';
+import 'package:myapp/views/moment/widgets/post_items.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({

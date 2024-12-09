@@ -2,15 +2,15 @@ import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hello_world/pages/home_page.dart';
-import 'package:hello_world/pages/moment_create_page.dart';
-import 'package:hello_world/pages/search_page.dart';
-import 'package:hello_world/resources/colors.dart';
+import 'package:myapp/views/moment/pages/home_page.dart';
+import 'package:myapp/views/moment/pages/moment_create_page.dart';
+import 'package:myapp/views/moment/pages/search_page.dart';
+import 'package:myapp/core/resources/colors.dart';
 
 
 import 'package:nanoid2/nanoid2.dart';
 
-import '../models/moment.dart';
+import '../../../models/moment.dart';
 
 
 class MainPage extends StatefulWidget {

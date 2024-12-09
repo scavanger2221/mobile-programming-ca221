@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/models/comment.dart';
-import 'package:hello_world/resources/dimentions.dart';
-import 'package:nanoid2/nanoid2.dart';
+import 'package:myapp/core/resources/dimentions.dart';
 
-
-import '../resources/colors.dart';
+import '../../../models/moment.dart';
+import '../../../core/resources/colors.dart';
 
 class CommentEntryPage extends StatefulWidget {
-  const CommentEntryPage(
-    {
-      super.key, 
-      required this.onSaved,
-      required this.momentId,
-      this.comment
-      }
-    );
+  const CommentEntryPage({super.key, required this.onSaved});
 
-  final Comment? comment;
-  final String momentId; 
-  final void Function({required Comment newComment, String? commentId}) onSaved;
+  final Function(Moment newMoment) onSaved;
 
   @override
   State<CommentEntryPage> createState() => _CommentEntryPageState();
@@ -27,26 +16,7 @@ class CommentEntryPage extends StatefulWidget {
 class _CommentEntryPageState extends State<CommentEntryPage> {
   // Membuat object form global key
   final _formKey = GlobalKey<FormState>();
-  final _dataComment = {};
-
-  @override
-  void initState() {
-    if (widget.comment != null) {
-      super.initState();
-      _dataComment['comment'] = widget.comment?.comment;
-      _dataComment['creator'] = widget.comment?.creator;
-      _dataComment['created_at'] =widget.comment?.createdAt;
-    }
-  }
-
-  String _getTitle()
-  {
-      if (widget.comment != null ) {
-          return "Update Comment";
-      }
-
-      return "Create Comment";
-  }
+  final _dataMoment = {};
 
   // Membuat method untuk menyimpan data moment
   void _saveComment() {
@@ -54,25 +24,17 @@ class _CommentEntryPageState extends State<CommentEntryPage> {
       // Menyimpan data inputan pengguna ke map _dataMoment
       _formKey.currentState!.save();
       // Membuat object moment baru
-      final Comment comment  = Comment(
-        comment: _dataComment['comment'],
-        id: widget.comment?.id ?? nanoid(),
-        creator: _dataComment['creator'],
-        momentId: widget.momentId,
-      );
 
-      widget.onSaved(newComment: comment, commentId: comment.id);
       // Menutup halaman create moment
       Navigator.of(context).pop();
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_getTitle()),
+        title: const Text('Create Comment'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(largeSize),
@@ -84,7 +46,6 @@ class _CommentEntryPageState extends State<CommentEntryPage> {
               children: [
                 const Text('Creator'),
                 TextFormField(
-                  initialValue: _dataComment['creator'] ?? "",
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(0.0),
@@ -101,13 +62,12 @@ class _CommentEntryPageState extends State<CommentEntryPage> {
                   },
                   onSaved: (newValue) {
                     if (newValue != null) {
-                      _dataComment['creator'] = newValue;
+                      _dataMoment['creator'] = newValue;
                     }
                   },
                 ),
                 const Text('Comment'),
                 TextFormField(
-                  initialValue: _dataComment['comment'] ?? "",
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(0.0),
@@ -125,7 +85,7 @@ class _CommentEntryPageState extends State<CommentEntryPage> {
                   },
                   onSaved: (newValue) {
                     if (newValue != null) {
-                      _dataComment['comment'] = newValue;
+                      _dataMoment['caption'] = newValue;
                     }
                   },
                 ),
