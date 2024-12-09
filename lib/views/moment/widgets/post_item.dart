@@ -4,27 +4,15 @@ import 'package:myapp/core/resources/dimentions.dart';
 import 'package:myapp/views/moment/widgets/post_action.dart';
 import 'package:myapp/views/moment/widgets/post_title.dart';
 
-
 import '../../../models/moment.dart';
 
-class PostItems extends StatelessWidget {
-  const PostItems({
+class PostItem extends StatelessWidget {
+  const PostItem({
     super.key,
     required this.moment,
-    required this.onUpdate,
-    required this.onDelete,
   });
 
   final Moment moment;
-  final Function(String id) onUpdate;
-  final Function(String id) onDelete;
-
-  void _openCommentForm(BuildContext context, Moment moment) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => CommentPage(momentId: moment.id,))
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +36,6 @@ class PostItems extends StatelessWidget {
           children: [
             PostTitle(
               moment: moment,
-              onUpdate: onUpdate,
-              onDelete: onDelete,
             ),
             Padding(
               padding: const EdgeInsets.all(smallSize),
@@ -61,15 +47,24 @@ class PostItems extends StatelessWidget {
                       PostAction(
                         icon: 'assets/icons/fi-br-heart.svg',
                         label: moment.likeCount.toString(),
+                        onTap: () {},
                       ),
                       PostAction(
                         icon: 'assets/icons/fi-br-comment.svg',
                         label: moment.commentCount.toString(),
-                        action: () => _openCommentForm(context, moment),
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return CommentPage(
+                              momentId: moment.id,
+                            );
+                          }));
+                        },
                       ),
                       PostAction(
                         icon: 'assets/icons/fi-br-bookmark.svg',
                         label: moment.bookmarkCount.toString(),
+                        onTap: () {},
                       ),
                     ],
                   ),

@@ -47,7 +47,7 @@ class _SearchAndFilterState extends State<SearchAndFilter> {
         fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
         filled: true,
         prefixIcon: Container(
-          margin: const EdgeInsets.only(left: mediumSize),  
+          margin: const EdgeInsets.only(left: mediumSize),
           child: IconButton(
             icon: SvgPicture.asset(
               "assets/icons/fi-br-search.svg",
