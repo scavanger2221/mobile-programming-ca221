@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myapp/models/comment.dart';
 import 'package:faker/faker.dart' as faker;
-import 'package:myapp/views/comment/pages/comment_entry_page.dart';
 import 'package:nanoid2/nanoid2.dart';
 
+import 'commment_entry_page.dart';
 
 class CommentPage extends StatefulWidget {
+  static const routeName = '/comments';
   const CommentPage({super.key, required this.momentId});
   final String momentId;
 
@@ -57,11 +58,7 @@ class _CommentPageState extends State<CommentPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return CommentEntryPage(
-              onSaved: (newMoment) {},
-            );
-          }));
+          Navigator.of(context).pushNamed(CommentEntryPage.routeName);
         },
         child: const Icon(Icons.comment),
       ),
